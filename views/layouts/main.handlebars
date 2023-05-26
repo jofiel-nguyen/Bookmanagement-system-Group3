@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <title>BookTrackr</title>
-    <link rel="stylesheet" href="styles.css" />
+    {{!-- <link rel="stylesheet" href="/public/styles.css" /> --}}
+    {{{css 'styles.css'}}}
 </head>
 <body>
   <div class="parallax">
@@ -57,7 +58,7 @@
                 <p>We provide a one-stop shop where you can keep track of the books you've read and want to read!</p>
             </div>
         </div>
-    <img class="secondphoto" src="Develop/images/1003w-0dcKQCTo9CY.jpg" />
+    <img class="secondphoto" src="/images/1003w-0dcKQCTo9CY.jpg" /> 
 </div>
 
 <div class="team-section" id="team-section">
@@ -100,6 +101,6 @@
     <button class="scroll-to-top-button">Go to Top</button>
 
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
-    <script src="scripts.js"></script>
+    <script src="/scripts.js"></script> 
 </body>
 </html>

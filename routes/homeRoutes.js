@@ -1,18 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-
-// Homepage route
-router.get('/', (req, res) => {
-  res.render('homepage');
-});
+const path = require('path');
+const usersFilePath = path.join(__dirname, '../config/users.json');
 
 // Login endpoint
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   // Read the users data from the users.json file
-  fs.readFile('config/users.json', (err, data) => {
+  fs.readFile(usersFilePath, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -36,7 +33,7 @@ router.post('/create-account', (req, res) => {
   const { username, email, password } = req.body;
 
   // Read the users data from the users.json file
-  fs.readFile('config/users.json', (err, data) => {
+  fs.readFile(usersFilePath, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -63,7 +60,7 @@ router.post('/create-account', (req, res) => {
     users.push(newUser);
 
     // Write the updated users data back to the users.json file
-    fs.writeFile('config/users.json', JSON.stringify(users), (err) => {
+    fs.writeFile(usersFilePath, JSON.stringify(users), 'utf8', (err) => {
       if (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });

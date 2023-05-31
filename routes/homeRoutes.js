@@ -9,11 +9,8 @@ const sessionMiddleware = session({
   saveUninitialized: false,
 });
 
-// Import the app variable from the server.js file
-const app = require('../server');
-
-// Add session middleware to the app
-app.use(sessionMiddleware);
+// Add session middleware to the router
+router.use(sessionMiddleware);
 
 // Create a route that uses the `req` variable
 router.get('/', (req, res) => {
@@ -33,7 +30,13 @@ const user = {
   email: 'johndoe@example.com'
 };
 
-req.session.user = user;
+router.get('/login', (req, res) => {
+  // Store the user's information in the session
+  req.session.user = user;
 
-// Export the router
-module.exports = router;
+  // Redirect to the homepage
+  res.redirect('/');
+});
+
+// Export the router and sessionMiddleware directly
+module.exports = { router, sessionMiddleware };

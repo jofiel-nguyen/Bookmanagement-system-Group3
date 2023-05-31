@@ -1,7 +1,7 @@
 {
   "name": "new-package-book",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "description": "## Description   Book Management System allows users to keep track of their personal book collection. The application will provide a user-friendly interface for managing books, including adding new books, updating book details, and viewing the book collection.",
   "version": "1.0.0",

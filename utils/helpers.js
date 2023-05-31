@@ -1,8 +1,18 @@
 const Handlebars = require('handlebars');
 
-module.exports = {
-  css: function(file) {
-    // Generate the HTML for including CSS file
-    return new Handlebars.SafeString('<link rel="stylesheet" href="' + file + '">');
-  }
+const helpers = {
+  formatDate: function (date) {
+    const formattedDate = date.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    return formattedDate;
+  },
+
+  css: function (filename) {
+    return new Handlebars.SafeString(`<link rel="stylesheet" href="/css/${filename}">`);
+  },
 };
+
+module.exports = helpers;

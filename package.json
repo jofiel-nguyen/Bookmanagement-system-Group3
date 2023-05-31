@@ -1,7 +1,7 @@
 {
   "name": "new-package-book",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "description": "## Description   Book Management System allows users to keep track of their personal book collection. The application will provide a user-friendly interface for managing books, including adding new books, updating book details, and viewing the book collection.",
   "version": "1.0.0",
@@ -96,11 +96,11 @@
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
     "ms": "^2.0.0",
+    "mysql2": "^3.3.3",
     "negotiator": "^0.6.3",
     "neo-async": "^2.6.2",
     "node-addon-api": "^5.1.0",
     "node-fetch": "^2.6.11",
-    "nodemon": "^2.0.22",
     "nopt": "^1.0.10",
     "normalize-path": "^3.0.0",
     "npmlog": "^5.0.1",
@@ -181,5 +181,8 @@
   "bugs": {
     "url": "https://github.com/nhunguyen-debug/Bookmanagement-system-Group3/issues"
   },
-  "homepage": "https://github.com/nhunguyen-debug/Bookmanagement-system-Group3#readme"
+  "homepage": "https://github.com/nhunguyen-debug/Bookmanagement-system-Group3#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
 }

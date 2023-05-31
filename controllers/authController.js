@@ -1,15 +1,17 @@
-
 // Import necessary dependencies and modules
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 
 // Handle user registration
 exports.registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Check if the username already exists in the database
-    const existingUser = await User.findOne({ username });
+    // Check if the username already exists in the file
+    const existingUser = await fs.readFileSync('./config/users.json', 'utf8')
+      .then(data => JSON.parse(data))
+      .then(users => users.find((user) => user.username === username));
     if (existingUser) {
       return res.status(400).json({ message: 'Username already exists' });
     }
@@ -23,8 +25,14 @@ exports.registerUser = async (req, res) => {
       password: hashedPassword
     });
 
-    // Save the user to the database
-    await newUser.save();
+    // Save the user to the file
+    const users = await fs.readFileSync('./config/users.json', 'utf8')
+      .then(data => JSON.parse(data))
+      .then(data => {
+        data.push(newUser);
+        return data;
+      });
+    await fs.writeFileSync('./config/users.json', JSON.stringify(users, null, 2));
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -37,17 +45,22 @@ exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Find the user in the database
-    const user = await User.findOne({ username });
+    // Find the user in the file
+    const user = await fs.readFileSync('./config/users.json', 'utf8')
+      .then(data => JSON.parse(data))
+      .then(users => users.find((user) => user.username === username));
     if (!user) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
 
-    // Compare the provided password with the hashed password in the database
+    // Compare the provided password with the hashed password in the file
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
+
+    // Set the user as logged in
+    req.session.user = user;
 
     res.status(200).json({ message: 'Login successful' });
   } catch (error) {
@@ -56,5 +69,8 @@ exports.loginUser = async (req, res) => {
 };
 // Handle user logout
 exports.logoutUser = (req, res) => {
-    res.status(200).json({ message: `Goodbye, ${username}! Logout successful` });
+    // Clear the user's session
+    req.session.destroy();
+
+    res.status(200).json({ message: `Goodbye! Logout successful` });
   };

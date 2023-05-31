@@ -1,75 +1,39 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
-const usersFilePath = path.join(__dirname, '../config/users.json');
+const session = require('express-session');
 
-// Login endpoint
-router.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  // Read the users data from the users.json file
-  fs.readFile(usersFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
-      return;
-    }
-
-    const users = JSON.parse(data);
-
-    // Check if the user exists and the password matches
-    const user = users.find((user) => user.username === username && user.password === password);
-    if (user) {
-      res.status(200).json({ message: 'Login successful' });
-    } else {
-      res.status(401).json({ error: 'Invalid credentials' });
-    }
-  });
+// Set up session middleware
+const sessionMiddleware = session({
+  secret: 'super secret secret',
+  resave: false,
+  saveUninitialized: false,
 });
 
-// Create account endpoint
-router.post('/create-account', (req, res) => {
-  const { username, email, password } = req.body;
+// Import the app variable from the server.js file
+const app = require('../server');
 
-  // Read the users data from the users.json file
-  fs.readFile(usersFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal Server Error' });
-      return;
-    }
+// Add session middleware to the app
+app.use(sessionMiddleware);
 
-    const users = JSON.parse(data);
-
-    // Check if the username is already taken
-    const existingUser = users.find((user) => user.username === username);
-    if (existingUser) {
-      res.status(400).json({ error: 'Username already exists' });
-      return;
-    }
-
-    // Create a new user object
-    const newUser = {
-      username,
-      email,
-      password
-    };
-
-    // Add the new user to the users array
-    users.push(newUser);
-
-    // Write the updated users data back to the users.json file
-    fs.writeFile(usersFilePath, JSON.stringify(users), 'utf8', (err) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-        return;
-      }
-
-      res.status(200).json({ message: 'Account created successfully' });
-    });
-  });
+// Create a route that uses the `req` variable
+router.get('/', (req, res) => {
+  // Check if the user is authenticated
+  if (req.session.user) {
+    // User is already logged in, redirect to the homepage
+    return res.redirect('/');
+  } else {
+    // User is not logged in, render the login page
+    res.render('login');
+  }
 });
 
+// Store the user's information in the session
+const user = {
+  name: 'John Doe',
+  email: 'johndoe@example.com'
+};
+
+req.session.user = user;
+
+// Export the router
 module.exports = router;

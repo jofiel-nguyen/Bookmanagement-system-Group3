@@ -1,72 +1,96 @@
 const express = require('express');
-const { Book } = require('../models');
-
 const router = express.Router();
+const Book = require('../models/book');
 
-// Retrieve all books
+// Get all books
 router.get('/books', async (req, res) => {
   try {
     const books = await Book.findAll();
     res.render('books', { books });
   } catch (error) {
-    console.error('Error retrieving books:', error);
-    res.render('error', { error: 'An error occurred. Please try again later.' });
+    console.error('Error fetching books:', error);
+    res.render('error', { message: 'An error occurred. Please try again later.' });
+  }
+});
+
+// Get a specific book
+router.get('/books/:id', async (req, res) => {
+  const bookId = req.params.id;
+
+  try {
+    const book = await Book.findByPk(bookId);
+    if (!book) {
+      res.render('error', { message: 'Book not found' });
+    } else {
+      res.render('book', { book });
+    }
+  } catch (error) {
+    console.error(`Error fetching book with id ${bookId}:`, error);
+    res.render('error', { message: 'An error occurred. Please try again later.' });
   }
 });
 
 // Add a new book
-router.get('/books/new', (req, res) => {
-  res.render('add-book');
-});
-
-router.post('/books/new', async (req, res) => {
+router.post('/books', async (req, res) => {
   const { title, author, publicationDate, genre, description } = req.body;
 
   try {
-    await Book.create({ title, author, publicationDate, genre, description });
-    res.redirect('/books');
+    const newBook = await Book.create({
+      title,
+      author,
+      publicationDate,
+      genre,
+      description,
+    });
+
+    res.redirect(`/books/${newBook.id}`);
   } catch (error) {
-    console.error('Error adding book:', error);
-    res.render('add-book', { error: 'An error occurred. Please try again later.' });
+    console.error('Error creating book:', error);
+    res.render('error', { message: 'An error occurred. Please try again later.' });
   }
 });
 
-// Edit a book
-router.get('/books/:id/edit', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const book = await Book.findByPk(id);
-    res.render('edit-book', { book });
-  } catch (error) {
-    console.error('Error retrieving book:', error);
-    res.render('error', { error: 'An error occurred. Please try again later.' });
-  }
-});
-
-router.post('/books/:id/edit', async (req, res) => {
-  const { id } = req.params;
+// Update a book
+router.put('/books/:id', async (req, res) => {
+  const bookId = req.params.id;
   const { title, author, publicationDate, genre, description } = req.body;
 
   try {
-    await Book.update({ title, author, publicationDate, genre, description }, { where: { id } });
-    res.redirect('/books');
+    const book = await Book.findByPk(bookId);
+    if (!book) {
+      res.render('error', { message: 'Book not found' });
+    } else {
+      await book.update({
+        title,
+        author,
+        publicationDate,
+        genre,
+        description,
+      });
+
+      res.redirect(`/books/${book.id}`);
+    }
   } catch (error) {
-    console.error('Error updating book:', error);
-    res.render('edit-book', { error: 'An error occurred. Please try again later.' });
+    console.error(`Error updating book with id ${bookId}:`, error);
+    res.render('error', { message: 'An error occurred. Please try again later.' });
   }
 });
 
 // Delete a book
-router.post('/books/:id/delete', async (req, res) => {
-  const { id } = req.params;
+router.delete('/books/:id', async (req, res) => {
+  const bookId = req.params.id;
 
   try {
-    await Book.destroy({ where: { id } });
-    res.redirect('/books');
+    const book = await Book.findByPk(bookId);
+    if (!book) {
+      res.render('error', { message: 'Book not found' });
+    } else {
+      await book.destroy();
+      res.redirect('/books');
+    }
   } catch (error) {
-    console.error('Error deleting book:', error);
-    res.render('error', { error: 'An error occurred. Please try again later.' });
+    console.error(`Error deleting book with id ${bookId}:`, error);
+    res.render('error', { message: 'An error occurred. Please try again later.' });
   }
 });
 

@@ -25,6 +25,18 @@ Book.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    publisher: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  bookLink: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  bookImg: {
+    type: DataTypes.STRING, 
+    allowNull: false,
+  },
   },
   {
     sequelize,

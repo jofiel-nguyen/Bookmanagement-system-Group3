@@ -32,7 +32,7 @@ router.get('/books/:id', async (req, res) => {
 
 // Add a new book
 router.post('/books', async (req, res) => {
-  const { title, author, publicationDate, genre, description } = req.body;
+  const { title, author, publicationDate, genre, description, publisher, bookLink, bookImg } = req.body;
 
   try {
     const newBook = await Book.create({
@@ -41,6 +41,9 @@ router.post('/books', async (req, res) => {
       publicationDate,
       genre,
       description,
+      publisher,
+      bookLink,
+      bookImg,
     });
 
     res.redirect(`/books/${newBook.id}`);
@@ -53,7 +56,7 @@ router.post('/books', async (req, res) => {
 // Update a book
 router.put('/books/:id', async (req, res) => {
   const bookId = req.params.id;
-  const { title, author, publicationDate, genre, description } = req.body;
+  const { title, author, publicationDate, genre, description, publisher, bookLink, bookImg } = req.body;
 
   try {
     const book = await Book.findByPk(bookId);
@@ -66,6 +69,9 @@ router.put('/books/:id', async (req, res) => {
         publicationDate,
         genre,
         description,
+        publisher,
+        bookLink,
+        bookImg,
       });
 
       res.redirect(`/books/${book.id}`);

@@ -12,7 +12,11 @@
       <a class="button1">Home</a>
       <a class="button2">About</a>
       <a class="button3">The team</a>
-      <a class="login-button">Login</a>
+       {{#if loggedIn}}
+          <a href="/logout">Log out</a>
+        {{else}}
+          <a href="/login">Log in</a>
+        {{/if}}
     </nav>
 
     <div id="loginModal" class="modal">
@@ -48,6 +52,7 @@
       </div>
     </main>
   </div>
+  <h2>Welcome to the Page, {{username}}!</h2>
 
   <h2 class="m2"><span class="blink">{</span>One stop shop for any book lover.<span class="blink">}</span></h2>
 

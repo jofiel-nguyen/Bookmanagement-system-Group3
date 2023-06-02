@@ -3,37 +3,38 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const session = require('express-session');
+const fs = require('fs');
 const homeRoutes = require('./routes/homeRoutes');
 const authRoutes = require('./routes/authRoutes');
-const helpers = require('./utils/helpers'); // Import the helpers object
+const helpers = require('./utils/helpers');
 
-// Sets up the Express App
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Set Handlebars as the default template engine.
-const hbs = exphbs.create({ helpers }); // Pass the helpers object to exphbs.create()
+const hbs = exphbs.create({ helpers });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-// Define the session middleware
 const sessionMiddleware = session({
   secret: 'super secret secret',
   resave: false,
   saveUninitialized: false,
 });
-
-// Include the session middleware
 app.use(sessionMiddleware);
 
-// Set up routes
-app.use('/', homeRoutes.router); // Access the router property of homeRoutes
-app.use('/', authRoutes.router); // Access the router property of authRoutes
+// Read users.json file
+const users = JSON.parse(fs.readFileSync('./config/users.json'));
 
-// Starts the server to begin listening
+// Set up routes
+app.use('/', homeRoutes.router);
+app.use('/', authRoutes.router);
+
+// Import and configure the login module
+const loginModule = require('./public/js/login');
+loginModule(app);
 app.listen(PORT, () => {
   console.log('Server listening on: http://localhost:' + PORT);
 });

@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
+  <head>
     <title>Login</title>
-    {{{css 'style.css'}}}
-</head>
-<body>
-    <h1>Login</h1>
-    <form id="loginForm" action="/login" method="POST">
-        <input type="text" name="username" placeholder="Username" />
-        <input type="password" name="password" placeholder="Password" />
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="top-bar">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        {{#if username}}
+          <span>Welcome, {{username}}!</span>
+          <a href="/logout">Logout</a>
+        {{else}}
+          <a href="/theteam">The team</a>
+          <a href="/login">Log in</a>
+          
+        {{/if}}
+      </div>
+      <h1>Login</h1>
+      <form action="/login" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
         <button type="submit">Login</button>
-    </form>
-</body>
+      </form>
+    </div>
+  </body>
 </html>

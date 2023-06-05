@@ -5,7 +5,7 @@ html, body {
 }
 
 .parallax {
-  background-image: url('./images/book-open-wing-black-and-white-photography-leaf-851207-pxhere.com_.jpg');
+  background-image: url('../images/book-open-wing-black-and-white-photography-leaf-851207-pxhere.com_.jpg');
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -313,4 +313,25 @@ left: 25%;
 .login-button {
   cursor: pointer;
   text-decoration: underline;
+}
+.search-container {
+  text-align: center;
+  position: relative;
+  margin-top: 20px;
+}
+.search-container input {
+  width: 300px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.search-container button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }

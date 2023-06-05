@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+// const sequelize = require('../config/database');
+const sequelize = require('../config/connection');
 
 class Book extends Model {}
 
@@ -30,6 +31,10 @@ Book.init(
     allowNull: false,
   },
   bookLink: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  bookIsbn: {
     type: DataTypes.STRING,
     allowNull: false,
   },

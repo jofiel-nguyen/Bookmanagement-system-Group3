@@ -14,7 +14,9 @@
         <div class="row">
             <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
                 <input id="search-box" type="text" class="form-control" placeholder="Search Books">
-                <button id="search" class="btn btn-primary">Search</button>
+                <form id="search-form" action="/search" method="GET" target="_blank">
+                    <button id="search" class="btn btn-primary" type="submit">Search</button>
+                </form>
             </div>
         </div>
         <div class="book-list">
@@ -45,6 +47,6 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="testapp.js"></script> 
+    <script src="/js/testapp.js"></script> 
 </body>
 </html>

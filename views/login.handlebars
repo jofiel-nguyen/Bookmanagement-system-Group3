@@ -3,19 +3,60 @@
   <head>
     <title>Login</title>
     {{{css 'style.css'}}}
-</head>
-<body>
+  </head>
+  <body>
     <h1>Login</h1>
     <form id="loginForm" action="/login" method="POST">
-        <input type="text" name="username" placeholder="Username" />
-        <input type="password" name="password" placeholder="Password" />
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  </body>
-   <script src="/js/scripts.js"></script>
-  <script src="/js/login.js"></script>
-  <script src="js/view.js"></script>
+      <input type="text" name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <button id="search-button" type="button">Search</button>
+    </form>
 
-  <script src="/js/search.js"></script>
+    <div id="search-results"></div>
+
+    <script src="/js/scripts.js"></script>
+    <script src="js/view.js"></script>
+
+    <script id="book-template" type="text/x-handlebars-template">
+      {{#each books}}
+        <div class="book">
+          <h2>{{volumeInfo.title}}</h2>
+          <p>{{volumeInfo.authors}}</p>
+        </div>
+      {{/each}}
+    </script>
+
+    <script>
+      // Move the content of your search.js file here
+      document.getElementById('search-button').addEventListener('click', function() {
+        var searchInput = document.getElementById('search-input').value;
+        searchBooks(searchInput);
+      });
+
+      function searchBooks(query) {
+       
+  function searchBooks(query) {
+    // Clear previous search results
+    document.getElementById('search-results').innerHTML = '';
+  
+    // Perform API request to Google Books
+    var url = 'https://www.googleapis.com/books/v1/volumes?q=' + encodeURIComponent(query);
+    fetch(url)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Process the search results and display them
+        var results = data.items;
+        var templateSource = document.getElementById('book-template').innerHTML;
+        var template = Handlebars.compile(templateSource);
+        var html = template({ books: results });
+        document.getElementById('search-results').innerHTML = html;
+      })
+      .catch(function(error) {
+        console.log('An error occurred:', error);
+      });
+      }
+    </script>
+  </body>
 </html>

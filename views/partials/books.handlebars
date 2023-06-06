@@ -13,9 +13,15 @@
         <div id="title" class="text-center mt-5">Book Finder</div>
         <div class="row">
             <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
+                <form id="search-form" action="#" method="GET">
+                    <input id="search-box" type="text" class="form-control" placeholder="Search Books">
+                    <button id="search" class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+            {{!-- <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
                 <input id="search-box" type="text" class="form-control" placeholder="Search Books">
                 <button id="search" class="btn btn-primary">Search</button>
-            </div>
+            </div> --}}
         </div>
         <div class="book-list">
             <h2 class="text-center">Search Results</h2> 
@@ -45,6 +51,6 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="testapp.js"></script> 
+    <script src="/js/testapp.js"></script> 
 </body>
 </html>

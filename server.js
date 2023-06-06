@@ -7,6 +7,7 @@ const fs = require('fs');
 const homeRoutes = require('./routes/homeRoutes');
 const authRoutes = require('./routes/authRoutes');
 const helpers = require('./utils/helpers');
+const axios = require('axios'); // import axios
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -31,6 +32,30 @@ const users = JSON.parse(fs.readFileSync('./config/users.json'));
 // Set up routes
 app.use('/', homeRoutes.router);
 app.use('/', authRoutes.router);
+
+// testing /search route
+app.get('/search', (req, res) => {
+  const searchData = req.query.searchData;
+  const bookUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchData)}`;
+
+  axios
+    .get(bookUrl)
+    .then(response => {
+      const books = response.data.items.map(item => ({
+        title: item.volumeInfo.title,
+        author: item.volumeInfo.authors ? item.volumeInfo.authors.join(', ') : 'Unknown Author',
+        publisher: item.volumeInfo.publisher ? item.volumeInfo.publisher : 'Unknown Publisher',
+        bookLink: item.volumeInfo.previewLink,
+        bookImg: item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : 'https://via.placeholder.com/150'
+      }));
+
+      res.render('search', { books });
+    })
+    .catch(error => {
+      console.log('Error:', error);
+      res.send('An error occurred while fetching search results');
+    });
+});
 
 // Login route
 app.get('/login', (req, res) => {

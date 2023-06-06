@@ -26,12 +26,25 @@
                       <h5 class="card-title">{{this.title}}</h5>
                       <p class="card-text">Author: {{this.author}}</p>
                       <p class="card-text">Publisher: {{this.publisher}}</p>
+                       {{#if this.rating}}
+                                <p class="card-text">Rating: {{this.rating}}</p>
+                            {{else}}
+                                <p class="card-text">No rating available</p>
+                            {{/if}}
+                            {{#if this.reviews}}
+                                <p class="card-text">Reviews: {{this.reviews}}</p>
+                            {{else}}
+                                <p class="card-text">No reviews available</p>
+                            {{/if}}
                       <a href="{{this.bookLink}}" target="_blank" class="btn btn-secondary">Read Book</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            {{#if @indexIsEven}}
+        </div><div class="row">
+        {{/if}}
           {{/each}}
         </div>
       </div>

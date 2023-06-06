@@ -9,7 +9,7 @@
     <form id="loginForm" action="/login" method="POST">
       <input type="text" name="username" placeholder="Username" />
       <input type="password" name="password" placeholder="Password" />
-      <button id="search-button" type="button">Search</button>
+      <button type="submit">Login</button>
     </form>
 
     <div id="search-results"></div>
@@ -33,7 +33,7 @@
         searchBooks(searchInput);
       });
 
-      function searchBooks(query) {
+      
        
   function searchBooks(query) {
     // Clear previous search results

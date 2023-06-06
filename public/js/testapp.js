@@ -2,7 +2,7 @@ $(document).ready(function() {
     var item, title, author, publisher, bookLink, bookImg
     var outputList = document.getElementById("list-output");
     var bookUrl = "https://www.googleapis.com/books/v1/volumes?q=";
-    var apiKey = "AIzaSyAZ6v0IOalMHcuZ1viSrXpalAP2TCUY4iA";
+    var apiKey = "AIzaSyAZ6v0IOalMHcuZ1viSrXpalAP2TCUY4iA"; // Enter Your API Key
     var placeHolder = '<img src="https://via.placeholder.com/150">';
     var searchData;
 

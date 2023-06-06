@@ -37,6 +37,14 @@ Book.init(
     type: DataTypes.STRING, 
     allowNull: false,
   },
+  rating: {
+    type: DataTypes.FLOAT, // or any other appropriate data type for ratings
+    allowNull: true, // Set to true if a book may not have a rating
+  },
+  reviews: {
+    type: DataTypes.INTEGER, // or any other appropriate data type for reviews
+    allowNull: true, // Set to true if a book may not have reviews
+  },
   },
   {
     sequelize,

@@ -9,15 +9,15 @@
     <link href="stylesheet" type="text/css" href="style.css"> 
 </head>
 <body>
-    <div class="container">
-        {{!-- <div id="title" class="text-center mt-5">Book Finder</div> --}}
-        <div class="row">
-            <div id="input" class="input-group d-flex justify-content-center">
-                <form id="search-form" action="#" method="GET">
-                    <input id="search-box" type="text" class="form-control" placeholder="Search Books">
-                    <button id="search" class="btn btn-primary" type="submit">Search</button>
-                </form>
+   <div class="container">
+    <div class="row">
+        <div id="input" class="input-group">
+            <input id="search-box" type="text" class="form-control shorter-search-bar" placeholder="Search Books">
+            <div class="input-group-append">
+                <button id="search" class="btn btn-primary" type="submit">Search</button>
             </div>
+        </div>
+    </div>
             {{!-- <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
                 <input id="search-box" type="text" class="form-control" placeholder="Search Books">
                 <button id="search" class="btn btn-primary">Search</button>

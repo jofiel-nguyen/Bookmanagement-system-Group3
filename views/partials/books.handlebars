@@ -10,9 +10,9 @@
 </head>
 <body>
     <div class="container">
-        <div id="title" class="text-center mt-5">Book Finder</div>
+        {{!-- <div id="title" class="text-center mt-5">Book Finder</div> --}}
         <div class="row">
-            <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
+            <div id="input" class="input-group d-flex justify-content-center">
                 <form id="search-form" action="#" method="GET">
                     <input id="search-box" type="text" class="form-control" placeholder="Search Books">
                     <button id="search" class="btn btn-primary" type="submit">Search</button>
@@ -24,9 +24,9 @@
             </div> --}}
         </div>
         <div class="book-list">
-            <h2 class="text-center">Search Results</h2> 
-            <div id="list-output" class="">
-                <div class="row">
+            {{!-- <h2 class="text-center">Search Results</h2>  --}}
+            <div id="list-output" class="row">
+                {{!-- <div class="row"> --}}
                     {{#each books}}
                     <div class="col lg-6">
                         <div class="card" style="">

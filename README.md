@@ -55,6 +55,7 @@ Link to deployed website - https://bookmanagement.herokuapp.com/
 * MySQL2
 * dotenv
 * Sequelize
+* Axios
 * Google Books API - https://developers.google.com/books
 
 
